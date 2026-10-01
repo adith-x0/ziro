@@ -1,0 +1,22 @@
+{
+  "scenario_id": "SCENARIO_HOSPITAL_FLOODING_01",
+  "name": "Flooding Disrupts Access to St. Jude Memorial Hospital",
+  "location": {
+    "epicenter": "Intersection of Metropolitan Parkway & River Road",
+    "facility_name": "St. Jude Memorial Hospital (Level 1 Trauma Center)",
+    "latitude": 37.7749,
+    "longitude": -122.4194
+  },
+  "initial_incident_report": {
+    "citizen_id": "citizen_report_882",
+    "text": "Flash flooding has submerged Metropolitan Parkway under at least 2.5 feet of fast water. Ambulances cannot enter the emergency bay driveway.",
+    "reported_water_depth_inches": 30.0,
+    "image_evidence_url": "https://data.nexus-ops.org/scenarios/floods/hospital_inundation_01.jpg"
+  },
+  "expected_initial_risk_tier": "TIER_4_HIGH",
+  "replanning_trigger_event": {
+    "trigger_type": "SENSOR_SURGE",
+    "surge_depth_increase_inches": 18.0,
+    "affected_detour_route": "ROUTE_BETA_INDUSTRIAL"
+  }
+}

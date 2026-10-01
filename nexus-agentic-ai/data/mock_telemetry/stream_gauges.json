@@ -1,0 +1,32 @@
+[
+  {
+    "sensor_id": "SG-RIVER-401",
+    "location_name": "River Road at Metropolitan Parkway",
+    "latitude": 37.7752,
+    "longitude": -122.4201,
+    "current_water_level_inches": 32.4,
+    "flood_stage_threshold_inches": 24.0,
+    "is_flooded": true,
+    "trend": "RISING"
+  },
+  {
+    "sensor_id": "SG-INDUSTRIAL-202",
+    "location_name": "Industrial Way Canal Culvert",
+    "latitude": 37.7710,
+    "longitude": -122.4150,
+    "current_water_level_inches": 8.5,
+    "flood_stage_threshold_inches": 20.0,
+    "is_flooded": false,
+    "trend": "STABLE"
+  },
+  {
+    "sensor_id": "SG-NORTH-RIDGE-105",
+    "location_name": "North Ridge Elevated Overpass",
+    "latitude": 37.7810,
+    "longitude": -122.4250,
+    "current_water_level_inches": 2.1,
+    "flood_stage_threshold_inches": 18.0,
+    "is_flooded": false,
+    "trend": "STEADY"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    {"id": "DEPOT_CENTRAL", "name": "Central Fire & EMS Depot", "coords": [37.7680, -122.4100]},
+    {"id": "METROPOLITAN_CROSSING", "name": "Metropolitan Pkwy @ River Rd", "coords": [37.7749, -122.4194]},
+    {"id": "ST_JUDE_ER", "name": "St. Jude Hospital ER Bay", "coords": [37.7760, -122.4210]},
+    {"id": "INDUSTRIAL_WAY", "name": "Industrial Way Detour", "coords": [37.7710, -122.4150]},
+    {"id": "NORTH_RIDGE", "name": "North Ridge Overpass", "coords": [37.7810, -122.4250]}
+  ],
+  "edges": [
+    {"from": "DEPOT_CENTRAL", "to": "METROPOLITAN_CROSSING", "distance_km": 2.5, "flood_depth_inches": 32.4, "status": "BLOCKED"},
+    {"from": "METROPOLITAN_CROSSING", "to": "ST_JUDE_ER", "distance_km": 0.4, "flood_depth_inches": 30.0, "status": "BLOCKED"},
+    {"from": "DEPOT_CENTRAL", "to": "INDUSTRIAL_WAY", "distance_km": 3.1, "flood_depth_inches": 8.5, "status": "CLEAR"},
+    {"from": "INDUSTRIAL_WAY", "to": "ST_JUDE_ER", "distance_km": 3.3, "flood_depth_inches": 6.2, "status": "CLEAR"},
+    {"from": "DEPOT_CENTRAL", "to": "NORTH_RIDGE", "distance_km": 4.5, "flood_depth_inches": 2.1, "status": "CLEAR"},
+    {"from": "NORTH_RIDGE", "to": "ST_JUDE_ER", "distance_km": 2.2, "flood_depth_inches": 1.5, "status": "CLEAR"}
+  ]
+}

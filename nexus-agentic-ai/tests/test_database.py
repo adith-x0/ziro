@@ -154,7 +154,10 @@ async def test_route_lifecycle(db_session: AsyncSession):
     )
     assert compromised is not None
     assert compromised.is_compromised is True
-    assert "Surge breached" in compromised.compromised_reason
+    assert (
+        compromised.compromised_reason is not None
+        and "Surge breached" in compromised.compromised_reason
+    )
 
 
 @pytest.mark.asyncio
@@ -225,7 +228,7 @@ async def test_human_approval_gate(db_session: AsyncSession):
     )
     assert decided is not None
     assert decided.status == ApprovalStatus.APPROVED
-    assert decided.decision_token.startswith("tok-")
+    assert decided.decision_token is not None and decided.decision_token.startswith("tok-")
 
 
 @pytest.mark.asyncio

@@ -1,10 +1,18 @@
+import sys
 import time
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+# Ensure project root is in sys.path
+_project_root = Path(__file__).resolve().parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
+from app.api.mvp_endpoints import router as mvp_router
 from app.api.v1.health import router as health_router
 from app.api.v1.incidents import router as incidents_router
 from app.config import settings
@@ -63,6 +71,7 @@ def create_app() -> FastAPI:
     # Route Registrations
     app.include_router(health_router)
     app.include_router(incidents_router, prefix="/api/v1")
+    app.include_router(mvp_router, prefix="/api")
 
     @app.get("/", summary="Root Welcome")
     async def root() -> dict[str, Any]:

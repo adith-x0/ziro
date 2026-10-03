@@ -1,0 +1,26 @@
+# Environment & Secret files
+.env
+.env.*
+*.env
+*.env.*
+*.secret
+*.secrets
+*.key
+*.pem
+credentials.json
+client_secret*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+.mypy_cache/
+.ruff_cache/
+
+# Node & Next.js
+node_modules/
+.next/
+out/

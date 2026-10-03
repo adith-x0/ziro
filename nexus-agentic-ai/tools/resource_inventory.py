@@ -40,24 +40,58 @@ class ResourceInventoryTool(BaseTool):
 
     async def run(self, **kwargs: Any) -> dict[str, Any]:
         query = ResourceQueryInput(**kwargs)
-        items: list[ResourceInventoryItem] = [
+        all_inventory: list[ResourceInventoryItem] = [
             ResourceInventoryItem(
                 unit_id="MEDIC-RESCUE-44",
-                unit_name="High-Water Rescue Unit 44 (Ford F-550 4x4)",
-                resource_type=query.resource_type,
-                station_id="STATION-12-DOWNTOWN",
+                unit_name="Medic-Rescue 44 (Ford F-550 High-Water 4x4)",
+                resource_type="high_water_ambulance",
+                station_id="DEPOT-CENTRAL",
                 distance_km=3.8,
                 estimated_eta_minutes=8.0,
                 status="available",
             ),
             ResourceInventoryItem(
-                unit_id="BARRIER-CREW-02",
-                unit_name="Public Works Rapid Barrier Unit 2",
-                resource_type=query.resource_type,
+                unit_id="MEDIC-RESCUE-12",
+                unit_name="Medic-Rescue 12 (Freightliner M2 Severe-Duty)",
+                resource_type="high_water_ambulance",
+                station_id="DEPOT-CENTRAL",
+                distance_km=4.2,
+                estimated_eta_minutes=9.5,
+                status="available",
+            ),
+            ResourceInventoryItem(
+                unit_id="BARRIER-CREW-01",
+                unit_name="Public Works Rapid Barrier Unit 1",
+                resource_type="traffic_barrier_crew",
                 station_id="DEPOT-CENTRAL",
                 distance_km=5.2,
                 estimated_eta_minutes=12.0,
                 status="available",
             ),
+            ResourceInventoryItem(
+                unit_id="PUMP-FLOOD-03",
+                unit_name="Mobile High-Volume Flood Pump 03 (5000 GPM)",
+                resource_type="mobile_water_pump",
+                station_id="DEPOT-CENTRAL",
+                distance_km=4.0,
+                estimated_eta_minutes=10.0,
+                status="available",
+            ),
+            ResourceInventoryItem(
+                unit_id="SANDBAG-UNIT-01",
+                unit_name="Emergency Sandbag Staging Unit 1",
+                resource_type="sandbag_unit",
+                station_id="DEPOT-EAST",
+                distance_km=6.1,
+                estimated_eta_minutes=15.0,
+                status="available",
+            ),
         ]
-        return {"resources": [item.model_dump(mode="json") for item in items]}
+        # Strictly filter by requested resource type to prevent fabricated resources
+        matched = [
+            item
+            for item in all_inventory
+            if item.resource_type == query.resource_type
+            and item.distance_km <= query.max_distance_km
+        ]
+        return {"resources": [item.model_dump(mode="json") for item in matched]}

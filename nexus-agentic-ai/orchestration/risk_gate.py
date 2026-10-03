@@ -26,6 +26,7 @@ class DeterministicRiskGate:
     MEDIUM_RISK_ACTION_TYPES = {
         "DEPLOY_ROAD_BLOCK_BARRIER",
         "DISPATCH_HIGH_WATER_EMS",
+        "RESERVE_AMBULANCE",
         "ACTIVATE_SECONDARY_DETOUR",
     }
 
@@ -48,7 +49,10 @@ class DeterministicRiskGate:
 
     @classmethod
     def evaluate_plan(cls, actions: list[ActionItem]) -> tuple[list[ActionItem], bool]:
-        """Evaluates all actions in a plan and determines overall approval requirement."""
+        """Evaluates all actions in a plan and determines overall approval requirement.
+
+        Strictly deterministic: overwrites any attempted LLM policy bypasses.
+        """
         requires_approval = False
         evaluated_actions: list[ActionItem] = []
 
@@ -56,9 +60,42 @@ class DeterministicRiskGate:
             tier, needs_approval = cls.evaluate_action(action)
             action.risk_tier = tier.value
             action.approval_required = needs_approval
-            action.approval_status = "PENDING" if needs_approval else "AUTO_APPROVED"
+            # Deterministically enforce PENDING status if approval required
+            if needs_approval and action.approval_status != "APPROVED":
+                action.approval_status = "PENDING"
+            elif not needs_approval:
+                action.approval_status = "AUTO_APPROVED"
+
             if needs_approval:
                 requires_approval = True
             evaluated_actions.append(action)
 
         return evaluated_actions, requires_approval
+
+    @classmethod
+    def validate_execution_permission(
+        cls, action: ActionItem, decision_token: str | None = None
+    ) -> None:
+        """Validates that an action is legally permitted to execute.
+
+        Raises PermissionError if an action requiring approval is not approved or lacks token.
+        Raises RuntimeError if an action was already executed (duplicate execution prevention).
+        """
+        if action.executed:
+            raise RuntimeError(
+                f"Action {action.action_id} ({action.action_type}) has already executed. "
+                "Duplicate execution prevented."
+            )
+
+        tier, needs_approval = cls.evaluate_action(action)
+        if needs_approval:
+            if action.approval_status != "APPROVED":
+                raise PermissionError(
+                    f"Policy violation: Action {action.action_id} of risk tier {tier.value} "
+                    f"({action.action_type}) cannot execute without explicit human commander approval!"
+                )
+            if not decision_token:
+                raise PermissionError(
+                    f"Policy violation: Action {action.action_id} requires a valid signed "
+                    "commander authorization token to execute!"
+                )

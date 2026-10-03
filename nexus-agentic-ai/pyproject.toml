@@ -18,6 +18,9 @@ dependencies = [
     "sqlalchemy>=2.0.28",
     "asyncpg>=0.29.0",
     "redis>=5.0.3",
+    "networkx>=3.0",
+    "shapely>=2.0",
+    "langgraph>=0.2.0",
 ]
 
 [project.optional-dependencies]
@@ -49,10 +52,10 @@ select = [
     "B",
     "UP",
 ]
-ignore = ["B008", "E402"]
+ignore = ["B008", "E402", "E501"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true

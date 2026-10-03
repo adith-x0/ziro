@@ -59,6 +59,7 @@ class ActionItem(BaseModel):
     action_type: Literal[
         "UPDATE_VARIABLE_MESSAGE_SIGN",
         "DISPATCH_HIGH_WATER_EMS",
+        "RESERVE_AMBULANCE",
         "DEPLOY_ROAD_BLOCK_BARRIER",
         "NOTIFY_HOSPITAL_TRAUMA_BAY",
         "ACTIVATE_SECONDARY_DETOUR",

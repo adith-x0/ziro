@@ -10,7 +10,7 @@ class BaseAgent(ABC):
         self.role = role
 
     @abstractmethod
-    async def process(self, state: dict[str, Any]) -> dict[str, Any]:
+    async def process(self, state: Any) -> dict[str, Any]:
         """Process current state and return state mutations."""
         pass
 

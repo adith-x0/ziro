@@ -184,3 +184,39 @@ Services:
 - **Redis 7**: `localhost:6379`
 - **FastAPI Core**: `localhost:8000`
 - **Next.js Frontend**: `localhost:3000`
+
+---
+
+## 🎬 Live MVP Vertical Slice Demonstration
+
+Run the automated live demonstration scenario (Flooding Disrupts Hospital Access) from the repository root:
+
+```bash
+# Windows
+python -m scripts.run_nexus_demo
+
+# Linux / macOS
+python3 -m scripts.run_nexus_demo
+```
+
+This single command executes the complete 18-step vertical slice:
+1. Incident Reception (`inc-...`)
+2. Multi-Source Evidence Verification (Water gauge, radar, citizen reports; 90% confidence)
+3. Topological Impact Analysis (City Hospital access evaluated, ROUTE-A blocked)
+4. Deterministic Resource Selection (`AMB-01` selected by distance and workload)
+5. Routing Engine Calculation (`ROUTE-B` selected, 11 min ETA)
+6. Action Plan Synthesis (Plan v1 sequenced DAG)
+7. Deterministic Safety Policy Gate (Tier 3 action intercepted)
+8. Human-in-the-Loop Authorization (Awaits watch commander approval)
+9. Action Execution & Idempotent Reservation (`AMB-01` confirmed with tracking token)
+10. Active Corridor Monitoring along `ROUTE-B`
+11. Environmental Anomaly Detection (`ROUTE-B` blocked by flash surge)
+12. Plan v1 Invalidation & Dynamic Replanning (Synthesizes Plan v2 with `ROUTE-C`)
+13. Corridor Redirection & Response Completion (`ROUTE-C` active, 15 audit events logged)
+
+### Running MVP End-to-End Tests
+```bash
+pytest tests/test_mvp_e2e.py -v
+```
+
+See [docs/MVP_VERIFICATION_REPORT.md](docs/MVP_VERIFICATION_REPORT.md) for full architecture diagrams, wireframes, and test evidence.

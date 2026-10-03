@@ -50,6 +50,21 @@ class Settings(BaseSettings):
         default=True,
         description="Enforce strict deterministic interception of Tier 3/4 actions",
     )
+    verification_confidence_threshold: float = Field(
+        default=0.80,
+        description="Minimum confidence score required to mark incident as verified",
+    )
+    evidence_staleness_max_hours: float = Field(
+        default=2.0,
+        description="Maximum age in hours before empirical evidence is treated as stale",
+    )
+    safety_evidence_staleness_max_seconds: float = Field(
+        default=1800.0,
+        description=(
+            "Tactical freshness threshold in seconds for Safety Agent "
+            "pre-execution gatekeeping (stricter than verification)"
+        ),
+    )
 
 
 settings = Settings()
